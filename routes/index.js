@@ -33,7 +33,7 @@ console.log("word", word);
   console.log(wordArray.indexOf());
 })
 
-router.post('/game', function(req, res, next){
+router.post('/game', function(req, res){
   let guess = req.body.guess;
   let guessIndex = word.indexOf(guess);
 
