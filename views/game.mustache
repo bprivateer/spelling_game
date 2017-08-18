@@ -3,6 +3,15 @@
   <button type="submit" name="button">Take a guess</button>
 </form>
 <span style="font-size: 2em; letter-spacing: 10px;">{{word}}</span>
+
+
+<div class="wrong">
+  <br>
+  <br>
+  You have guessed : "{{#wrong}}
+  {{.}}
+"{{/wrong}}
+</div>
 {{#wordArray}}
 {{.}}
 {{/wordArray}}

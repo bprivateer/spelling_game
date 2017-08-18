@@ -6,9 +6,14 @@ const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().sp
 let word;
 let example = "bernadette";
 let underS = "__________";
-let underScore;
+// let underScore;
 let guess;
 let numberOfTurn;
+let wordArray;
+let underScore = [];
+let wrongGuess = [];
+
+
 
   function random() {
     return words[ Math.floor(Math.random() * words.length)];
@@ -17,20 +22,24 @@ let numberOfTurn;
 router.get('/', function(req, res){
 
 word = random();
-let wordArray = word.split("");
+wordArray = word.split("");
 console.log("wordArray", wordArray);
-let underScore = [];
+underScore = [];
  for (var i = 0; i < word.length; i ++){
   underScore.push("_");
  }
 console.log("word", word);
   res.render("game", {word: underScore})
-  console.log(wordArray[3]);
+  console.log(wordArray.indexOf());
 })
 
 router.post('/game', function(req, res){
   let guess = req.body.guess;
   let guessIndex = word.indexOf(guess);
+// let guess = [];
+  // underScore.push(guess)
+  // console.log("guess", guess);
+
 
 
   // if (index !== -1){
@@ -42,5 +51,16 @@ router.post('/game', function(req, res){
   // underS[index] = guess;
   // console.log('underS ', underS);
   // underScore.splice(index, 1);
+console.log("wordarray", wordArray, underScore);
+  wordArray.forEach(function(char, index){
+    if(char == guess){
+      underScore[index] = guess;
+    }
+  })
+  if(guessIndex == -1){
+    wrongGuess.push(guess);
+  }
+
+  res.render('game', {word: underScore, wrong: wrongGuess })
 })
 module.exports = router;
