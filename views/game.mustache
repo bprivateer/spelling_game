@@ -1,0 +1,8 @@
+<form action="/game" method ="post">
+  <input type="text" name="guess" value="" placeholder="type here">
+  <button type="submit" name="button">Take a guess</button>
+</form>
+<span style="font-size: 2em; letter-spacing: 10px;">{{word}}</span>
+{{#wordArray}}
+{{.}}
+{{/wordArray}}
