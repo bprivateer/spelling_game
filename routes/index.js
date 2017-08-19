@@ -43,8 +43,8 @@ console.log("wordarray", wordArray, underScore, wrongGuess);
   wordArray.forEach(function(char, index){
     if(char == guess){
       underScore[index] = guess;
-      req.session.token = "token";
-      console.log("REQ", req.session);
+      // req.session.token = "token";
+      // console.log("REQ", req.session);
     }
   })
   if(guessIndex == -1){
