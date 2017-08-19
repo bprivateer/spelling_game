@@ -13,8 +13,6 @@ let wordArray;
 let underScore = [];
 let wrongGuess = [];
 
-
-
   function random() {
     return words[ Math.floor(Math.random() * words.length)];
   }
@@ -30,31 +28,40 @@ underScore = [];
  }
 console.log("word", word);
   res.render("game", {word: underScore})
-  console.log(wordArray.indexOf());
 })
 
-router.post('/game', function(req, res){
+router.post('/game', function(req, res, next){
   let guess = req.body.guess;
   let guessIndex = word.indexOf(guess);
 
 
   console.log('guessIndex: ', guessIndex);
 
-console.log("wordarray", wordArray, underScore);
+console.log("wordarray", wordArray, underScore, wrongGuess);
+
+
   wordArray.forEach(function(char, index){
     if(char == guess){
       underScore[index] = guess;
+      req.session.token = "token";
+      console.log("REQ", req.session);
     }
   })
   if(guessIndex == -1){
     wrongGuess.push(guess);
+    // req.session.token = "";
+  }  if (wrongGuess.length > 8){
+    res.redirect('/')
   }
+  // } else if (wrongGuess.length > 8){
+  //   req.session.token = '';
+  //   res.redirect('/')
+  //   // console.log("REA.SESSION.TOKEN", req.session.token);
+  //   console.log("wrongguess", wrongGuess);
+  // } else {
+  //
+  // }
 
   res.render('game', {word: underScore, wrong: wrongGuess })
 })
 module.exports = router;
-
-if(wrongGuess.length > 8 ){
-  req.session = 0;
-  
-}
