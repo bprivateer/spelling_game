@@ -8,9 +8,10 @@
 <div class="wrong">
   <br>
   <br>
-  You have guessed : "{{#wrong}}
-  {{.}}
-"{{/wrong}}
+  You have guessed :
+  {{#wrong}}
+  "{{.}}"
+{{/wrong}} and you have __ guesses left.
 </div>
 {{#wordArray}}
 {{.}}
