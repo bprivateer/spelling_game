@@ -11,7 +11,7 @@
   You have guessed :
   {{#wrong}}
   "{{.}}"
-{{/wrong}} and you have __ guesses left.
+{{/wrong}} and you have {{req.session.guesses}} guesses left.
 </div>
 {{#wordArray}}
 {{.}}
