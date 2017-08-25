@@ -63,7 +63,7 @@ let sameGuessWrong = wrongGuess.indexOf(guess);
 
     }
   }
-  if (wrongGuess.length > 8){
+  if (wrongGuess.length >= 8){
 
     res.redirect('/')
   }
