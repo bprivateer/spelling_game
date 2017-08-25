@@ -12,6 +12,8 @@ let numberOfTurn;
 let wordArray;
 let underScore = [];
 let wrongGuess = [];
+// let wrongCount = [];
+let numGuess;
 
   function random() {
     return words[ Math.floor(Math.random() * words.length)];
@@ -23,6 +25,7 @@ word = random();
 wordArray = word.split("");
 console.log("wordArray", wordArray);
 underScore = [];
+wrongGuess = [];
  for (var i = 0; i < word.length; i ++){
   underScore.push("_");
  }
@@ -30,14 +33,6 @@ console.log("word", word);
   res.render("game", {word: underScore})
 })
 
-// router.get('/game', function(req, res, next){
-//   if (req.session.token){
-//     next()
-//   } else if (req.session.token > 8){
-//     res.redirect('/');
-//   }
-//   res.render("game", {word: underScore, wrong: wrongGuess, token: token})
-// })
 
 router.post('/game', function(req, res, next){
   let guess = req.body.guess;
@@ -46,45 +41,38 @@ router.post('/game', function(req, res, next){
 
   console.log('guessIndex: ', guessIndex);
 
-console.log("wordarray", wordArray, underScore, wrongGuess);
-
+  console.log("wordarray", wordArray, underScore, wrongGuess, numGuess);
 
   wordArray.forEach(function(char, index){
     if(char == guess){
       underScore[index] = guess;
-      req.session.guesses = 8;
       console.log("REQ", req.session);
     }
-  })
-  if(guessIndex == -1){
-    wrongGuess.push(guess)
-    // return req.sessions.guess - 1;
-    // req.session.token = "";
+
+  });
+  if(guessIndex == -1){ // checks to see if guess is incorrect
+    // numGuess = 7 - wrongGuess.length;
+    console.log("COUTN WROG", numGuess);
+
+let sameGuessWrong = wrongGuess.indexOf(guess);
+    if(sameGuessWrong == -1){ // checks to see if theyve guessed wrong more than once
+      wrongGuess.push(guess)
+      numGuess = 8 - wrongGuess.length;
+
+    } else {
+
+    }
   }
   if (wrongGuess.length > 8){
+
     res.redirect('/')
   }
-  // } else if (wrongGuess.length > 8){
-  //   req.session.token = '';
-  //   res.redirect('/')
-  //   // console.log("REA.SESSION.TOKEN", req.session.token);
-  //   console.log("wrongguess", wrongGuess);
-  // } else {
-  //
-  // }
 
-  res.render('game', {word: underScore, wrong: wrongGuess , token: req.session.guesses, })
+
+  res.render('game', {word: underScore, wrong: wrongGuess, count: numGuess,})
+  return false
 })
 
-// router.get('/game', function(req, res, next){
-//   if (req.session.token){
-//     next()
-//   } else if (req.session.token > 8){
-//     res.redirect('/');
-//   }
-//
-//   }
-//   res.render("game", {word: underScore, wrong: wrongGuess })
-// })
+
 
 module.exports = router;
