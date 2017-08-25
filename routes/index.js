@@ -14,6 +14,7 @@ let underScore = [];
 let wrongGuess = [];
 // let wrongCount = [];
 let numGuess;
+let gameWon = false;
 
   function random() {
     return words[ Math.floor(Math.random() * words.length)];
@@ -54,24 +55,38 @@ router.post('/game', function(req, res, next){
     // numGuess = 7 - wrongGuess.length;
     console.log("COUTN WROG", numGuess);
 
-let sameGuessWrong = wrongGuess.indexOf(guess);
+    let sameGuessWrong = wrongGuess.indexOf(guess);
     if(sameGuessWrong == -1){ // checks to see if theyve guessed wrong more than once
       wrongGuess.push(guess)
       numGuess = 8 - wrongGuess.length;
 
-    } else {
-
     }
   }
-  if (wrongGuess.length >= 8){
-
-    res.redirect('/')
+  if (!underScore.includes('_')) {
+    gameWon = true;
+    res.redirect('/endgame')
   }
+  if (wrongGuess.length >= 8){
+    res.redirect('/endgame')
+  }
+
 
 
   res.render('game', {word: underScore, wrong: wrongGuess, count: numGuess,})
-  return false
-})
+    return false
+  })
+
+  router.get('/endgame', function(req,res) {
+    let object = {
+      word: wordArray,
+    };
+    if (gameWon === true) {
+      object.gameWon = true;
+    } else {
+      object.gameWon = false;
+    }
+    res.render('endgame', object)
+  })
 
 
 
